@@ -14,13 +14,14 @@ class SWViewController: UIViewController {
     
     var startTime = NSTimeInterval()
     
-    var timer = NSTimer()
+    var timer:NSTimer! = NSTimer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let aSelector : Selector = "start:"
         let tapGesture = UITapGestureRecognizer(target: self, action: aSelector)
+        let tap1 = UIGestureRecognizer(target: self, action: aSelector)
         tapGesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGesture)
         
@@ -48,7 +49,7 @@ class SWViewController: UIViewController {
     
     @IBAction func stop(sender: AnyObject) {
         timer.invalidate()
-        timer == nil
+        timer = nil
     }
     
     @IBAction func reset(sender: AnyObject) {
@@ -56,6 +57,12 @@ class SWViewController: UIViewController {
     }
     
     func updateTime() {
+        let calculatedTime = getTimeAttributes()
+        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
+        displayTimeLabel.text = calculatedTime.minutes + ":" + calculatedTime.seconds + ":" + calculatedTime.fraction
+    }
+    
+    func getTimeAttributes() -> (minutes: String, seconds: String, fraction: String) {
         var currentTime = NSDate.timeIntervalSinceReferenceDate()
         
         //Find the difference between current time and start time.
@@ -77,10 +84,8 @@ class SWViewController: UIViewController {
         let strSeconds = seconds > 9 ? String(seconds):"0" + String(seconds)
         let strFraction = fraction > 9 ? String(fraction):"0" + String(fraction)
         
-        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
-        displayTimeLabel.text = "\(strMinutes):\(strSeconds):\(strFraction)"
+        return (strMinutes, strSeconds, strFraction)
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
