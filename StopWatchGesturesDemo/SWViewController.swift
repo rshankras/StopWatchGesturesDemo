@@ -14,7 +14,7 @@ class SWViewController: UIViewController {
     
     var startTime = NSTimeInterval()
     
-    var timer:NSTimer! = NSTimer()
+    var timer = NSTimer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,6 @@ class SWViewController: UIViewController {
     
     @IBAction func stop(sender: AnyObject) {
         timer.invalidate()
-        timer = nil
     }
     
     @IBAction func reset(sender: AnyObject) {
